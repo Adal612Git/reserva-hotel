@@ -1,0 +1,29 @@
+ 
+# FRONTEND - Angular
+/reserva-hotel/frontend/node_modules/
+/reserva-hotel/frontend/dist/
+/reserva-hotel/frontend/.angular/
+/reserva-hotel/frontend/.env
+
+# BACKEND - Node.js
+/reserva-hotel/backend/node_modules/
+/reserva-hotel/backend/.env
+/reserva-hotel/backend/build/
+/reserva-hotel/backend/logs/
+/reserva-hotel/backend/coverage/
+
+# TEMP Y LOGS
+*.log
+*.tmp
+npm-debug.log
+yarn-error.log
+
+# IDES y sistemas
+.vscode/
+.idea/
+*.iml
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+desktop.ini
