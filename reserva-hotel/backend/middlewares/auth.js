@@ -1,16 +1,15 @@
 const jwt = require('jsonwebtoken');
+const SECRET = process.env.JWT_SECRET;
 
-const auth = (req, res, next) => {
+module.exports = function authenticate(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Acceso denegado' });
+  if (!token) return res.status(401).json({ error: 'Token requerido' });
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { userId: decoded.userId, rol: decoded.rol };
+    const decoded = jwt.verify(token, SECRET);
+    req.usuario = decoded; // 👈 Esto es clave
     next();
-  } catch (err) {
+  } catch {
     res.status(403).json({ error: 'Token inválido o expirado' });
   }
 };
-
-module.exports = auth;
