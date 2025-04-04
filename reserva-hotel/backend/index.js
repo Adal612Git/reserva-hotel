@@ -18,6 +18,9 @@ db.sync()
   .then(() => console.log("🗄️ Tablas sincronizadas"))
   .catch((err) => console.error("❌ Error al sincronizar tablas:", err));
 
+const cors = require('cors');
+app.use(cors());
+
 // Middleware
 app.use(express.json());
 
