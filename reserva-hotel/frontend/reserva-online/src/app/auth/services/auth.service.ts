@@ -14,7 +14,15 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, data);
   }
 
-  register(data: { email: string; password: string; confirmPassword: string }): Observable<any> {
+  register(data: { nombre: string; email: string; password: string; confirmPassword: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, data);
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
   }
 }

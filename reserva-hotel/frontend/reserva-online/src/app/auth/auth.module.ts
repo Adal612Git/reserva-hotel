@@ -32,7 +32,8 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     MatFormFieldModule,
     MatCardModule,
-    CoreModule
+    CoreModule,
+    MatIconModule
     // ❌ Elimina BrowserModule y CoreModule
   ]
 })
