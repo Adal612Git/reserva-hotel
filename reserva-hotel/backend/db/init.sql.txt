@@ -1,0 +1,72 @@
+-- init.sql: script inicial para ReservasHotel
+
+-- Crear tabla Rol
+CREATE TABLE rol (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Crear tabla Usuario
+CREATE TABLE usuario (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    id_rol INT REFERENCES rol(id)
+);
+
+-- Crear tabla Tipo de Habitación
+CREATE TABLE tipo_habitacion (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion TEXT,
+    precio_base NUMERIC(10,2) NOT NULL
+);
+
+-- Crear tabla Habitación
+CREATE TABLE habitacion (
+    id SERIAL PRIMARY KEY,
+    numero VARCHAR(10) NOT NULL UNIQUE,
+    descripcion TEXT,
+    id_tipo_habitacion INT REFERENCES tipo_habitacion(id)
+);
+
+-- Crear tabla Estado de Reserva
+CREATE TABLE estado_reserva (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Crear tabla Reserva
+CREATE TABLE reserva (
+    id SERIAL PRIMARY KEY,
+    id_usuario INT REFERENCES usuario(id),
+    id_habitacion INT REFERENCES habitacion(id),
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    id_estado INT REFERENCES estado_reserva(id),
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Crear tabla Pago
+CREATE TABLE pago (
+    id SERIAL PRIMARY KEY,
+    id_reserva INT REFERENCES reserva(id),
+    monto NUMERIC(10,2) NOT NULL,
+    fecha_pago TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    metodo_pago VARCHAR(50)
+);
+
+-- Insertar roles base
+INSERT INTO rol(nombre) VALUES ('cliente'), ('recepcionista'), ('admin');
+
+-- Insertar estados de reserva
+INSERT INTO estado_reserva(nombre) VALUES ('pendiente'), ('confirmada'), ('cancelada');
+
+-- Insertar tipos de habitación
+INSERT INTO tipo_habitacion(nombre, descripcion, precio_base)
+VALUES 
+('Sencilla', 'Una cama individual', 500),
+('Doble', 'Dos camas individuales o una matrimonial', 800),
+('Suite', 'Habitación de lujo', 1500);
